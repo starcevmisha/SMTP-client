@@ -1,0 +1,1 @@
+smtp_console.py --server smtp.gmail.com:465 --fromaddr smtp.task3@gmail.com --passwd pythonpython --toaddrs starcev_misha@mail.ru --subj TestSmtpClient --msg iloveyouPython  --attach 123.txt:lal.txt 12.png samokat.png --mode together
