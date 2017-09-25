@@ -1,7 +1,9 @@
 import re
-from arguments import Arguments
-from email_format import Email
-from smtp_server import SMTP
+
+from SMTP_pack.arguments import Arguments
+from SMTP_pack.smtp_server import SMTP
+
+from SMTP_pack.email_format import Email
 
 
 def send_mail(toaddr, args):

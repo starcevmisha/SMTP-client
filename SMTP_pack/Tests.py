@@ -1,10 +1,13 @@
-import unittest
-import email_format
 import sys
+import unittest
+from unittest import mock
+
+import smtp_server
 from arguments import Arguments
-from smtp_server import *
-import mock
-from mock import patch
+
+import email_format
+
+#from mock import patch
 
 true_email = 'Content-Type: multipart/mixed; boundary="===============84847' \
              '77675788374285=="\r\nMIME-Version: 1.0\r\nFrom: smtp.task' \
@@ -60,7 +63,7 @@ class TestArgParse(unittest.TestCase):
 
 
 def start_smtp():
-    smtp = SMTP()
+    smtp = smtp_server.SMTP()
     smtp.open_connection(('smtp.gmail.com', 465), False)
     return smtp
 
@@ -72,8 +75,8 @@ class TestSmtpServer(unittest.TestCase):
         value = (
             '501 5.5.4 Empty HELO/EHLO argument not '
             'allowed, closing connection.')
-        with patch.object(smtp, 'execute_recv', return_value=value):
-            with self.assertRaises(SMTPSessionError):
+        with mock.patch.object(smtp, 'execute_recv', return_value=value):
+            with self.assertRaises(smtp_server.SMTPSessionError):
                 smtp.helo()
         smtp.close()
 
@@ -89,14 +92,14 @@ class TestSmtpServer(unittest.TestCase):
             '250-PIPELINING\n'
             '250-CHUNKING\n'
             '250 SMTPUTF8\n')
-        with patch.object(smtp, 'execute_recv', return_value=value):
+        with mock.patch.object(smtp, 'execute_recv', return_value=value):
             self.assertEqual(250, smtp.helo())
         smtp.close()
 
     def test_recv_login_fail(self):
         smtp = start_smtp()
         smtp.helo()
-        with self.assertRaises(SMTPAuthenticationError):
+        with self.assertRaises(smtp_server.SMTPAuthenticationError):
             smtp.auth("123","123")
         smtp.close()
 
@@ -104,14 +107,17 @@ class TestSmtpServer(unittest.TestCase):
         smtp = start_smtp()
         smtp.helo()
         value = '235 2.7.0 Accepted\r\n'
-        with patch.object(smtp, 'execute_recv', return_value=value):
+        with mock.patch.object(smtp, 'execute_recv', return_value=value):
             smtp.auth("123", "123")
         smtp.close()
 
     def test_send_mail(self):
         value='250 2.1.5 OK h14sm618021lfe.30 - gsmtp\r\n'
         smtp = start_smtp()
-        print(smtp.send_socket('.'))
+        smtp.send_socket('.')
         self.assertEqual(1,1)
+        smtp.close()
 
 
+if __name__ == '__main__':
+    unittest.main()
