@@ -113,10 +113,10 @@ class SMTP:
                 # sys.exit(1)
             else:
                 if len(msg) == 0:
-                    print('orderly shutdown on server end')
+                    log.warning('orderly shutdown on server end')
                     # sys.exit(0)
                 elif len(msg) < 3:
-                    print('recv incorrect format')
+                    log.warning('recv incorrect format')
                     # sys.exit(0)
                 else:
                     break
