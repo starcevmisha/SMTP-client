@@ -105,11 +105,11 @@ class SMTP:
                     # print("time out. I try to send data again")
                     continue
                 else:
-                    raise e;
+                    raise e
                     # sys.exit(1)
             except s.error as e:
                 # Something else happened, handle error, exit, etc.
-                raise e;
+                raise e
                 # sys.exit(1)
             else:
                 if len(msg) == 0:
