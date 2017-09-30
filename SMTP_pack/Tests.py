@@ -7,11 +7,12 @@ from arguments import Arguments
 
 import email_format
 
-#from mock import patch
+# from mock import patch
 
 true_email = 'Content-Type: multipart/mixed; boundary="===============84847' \
              '77675788374285=="\r\nMIME-Version: 1.0\r\nFrom: smtp.task' \
-             '2@gmail.com\r\nSubject: smthnew\r\nTo: starcev_misha@mail.ru\r\n'\
+             '2@gmail.com\r\nSubject: smthnew\r\nTo: starcev_misha@'\
+             'mail.ru\r\n'\
              '\r\n--===============8484777675788374285==\r\nContent-Type:' \
              ' text/plain; charset="us-ascii"\r\nMIME-Version: 1.0\r\nC' \
              'ontent-Transfer-Encoding: 7bit\r\n\r\niloveyouPython\r\n--' \
@@ -87,7 +88,8 @@ class TestSmtpServer(unittest.TestCase):
             '250 smtp.gmail.com at your service, [128.75.98.44]\n'
             '250-SIZE 35882577\n'
             '250-8BITMIME\n'
-            '250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH\n'
+            '250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER'
+            ' XOAUTH\n'
             '250-ENHANCEDSTATUSCODES\n'
             '250-PIPELINING\n'
             '250-CHUNKING\n'
@@ -100,7 +102,7 @@ class TestSmtpServer(unittest.TestCase):
         smtp = start_smtp()
         smtp.helo()
         with self.assertRaises(smtp_server.SMTPAuthenticationError):
-            smtp.auth("123","123")
+            smtp.auth("123", "123")
         smtp.close()
 
     def test_recv_login_succes(self):
@@ -112,10 +114,10 @@ class TestSmtpServer(unittest.TestCase):
         smtp.close()
 
     def test_send_mail(self):
-        value='250 2.1.5 OK h14sm618021lfe.30 - gsmtp\r\n'
+        value = '250 2.1.5 OK h14sm618021lfe.30 - gsmtp\r\n'
         smtp = start_smtp()
         smtp.send_socket('.')
-        self.assertEqual(1,1)
+        self.assertEqual(1, 1)
         smtp.close()
 
 

@@ -2,7 +2,7 @@ import base64
 import logging
 import socket as s
 import ssl
-#import sys
+# import sys
 from time import sleep
 
 
@@ -54,7 +54,6 @@ class SMTP:
             raise SMTPSessionError(code, recv)
         return code
 
-
     def auth(self, username, password):
         if self.debug:
             log.info('try Login')
@@ -103,23 +102,22 @@ class SMTP:
                 if err == 'The read operation timed out' and count < 5:
                     sleep(1)
                     count += 1
-                    #print("time out. I try to send data again")
+                    # print("time out. I try to send data again")
                     continue
                 else:
-                    print(e)
-                    #sys.exit(1)
+                    raise e;
+                    # sys.exit(1)
             except s.error as e:
-                print(2)
                 # Something else happened, handle error, exit, etc.
-                print(e)
-                #sys.exit(1)
+                raise e;
+                # sys.exit(1)
             else:
                 if len(msg) == 0:
                     print('orderly shutdown on server end')
-                    #sys.exit(0)
+                    # sys.exit(0)
                 elif len(msg) < 3:
                     print('recv incorrect format')
-                    #sys.exit(0)
+                    # sys.exit(0)
                 else:
                     break
         recv = msg.decode()
@@ -129,7 +127,7 @@ class SMTP:
         code, recv = self.send_socket("MAIL FROM:<{}>".format(self.username))
 
     def rcptTo(self, recipient):
-        code,recv = self.send_socket("RCPT TO:<{}>".format(recipient))
+        code, recv = self.send_socket("RCPT TO:<{}>".format(recipient))
         return code, recv
 
     def data(self):
