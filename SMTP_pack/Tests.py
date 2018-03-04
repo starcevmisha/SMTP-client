@@ -3,7 +3,7 @@ import unittest
 from unittest import mock
 
 import smtp_server
-from arguments import Arguments
+from arguments1 import Arguments
 
 import email_format
 

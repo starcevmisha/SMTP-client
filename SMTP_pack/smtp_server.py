@@ -73,6 +73,7 @@ class SMTP:
             log.info("Success LOGIN!")
 
     def send_socket(self, command):
+        print("c:" + str(command))
         if not isinstance(command, bytes):
             command += '\r\n'
             command = command.encode()
@@ -82,6 +83,7 @@ class SMTP:
 
     def get_recv(self):
         recv = self.execute_recv()
+        print("s: "+recv)
 
         if recv[:3] not in ['250', '235', '220', '221', '354']:
             if self.debug:
@@ -138,7 +140,7 @@ class SMTP:
         self.mail()
 
         if not isinstance(receivers, list):
-            receivers = list(receivers)
+            receivers = [receivers]
 
         for receiver in receivers:
             code, recv = self.rcptTo(receiver)

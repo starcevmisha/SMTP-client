@@ -18,9 +18,9 @@ class Email:
                                               else toaddrs)
 
         self.email += self.boundary + "\r\n"
-        self.email += 'Content-Type: text/plain; charset="us-ascii"\r\n' \
+        self.email += 'Content-Type: text/plain; charset="utf-8"\r\n' \
                       'MIME-Version: 1.0\r\n' \
-                      'Content-Transfer-Encoding: 7bit\r\n\r\n'
+                      'Content-Transfer-Encoding: 8bit\r\n\r\n'
 
         self.email += "{}\r\n".format(message)
 
@@ -39,7 +39,6 @@ class Email:
                     a = f.read()
                     a = base64.b64encode(a)
                     # print(a)
-
                     attach += a.decode('ascii')
                     self.email += attach + '\r\n\r\n'
 

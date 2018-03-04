@@ -1,5 +1,5 @@
 import re
-from SMTP_pack.arguments1 import Arguments
+from SMTP_pack.argumentsForConfig import Arguments
 from SMTP_pack.smtp_server import SMTP
 
 from SMTP_pack.email_format import Email
@@ -18,7 +18,7 @@ def send_mail(toaddr, args):
 if __name__ == '__main__':
 
     parser = Arguments()
-    args = parser.get_args()
+    args = parser.get_args("ToSend/config.txt")
 
     client = SMTP(args['debug'])
     client.open_connection(args['server'], args['dis_enc'])
@@ -31,7 +31,6 @@ if __name__ == '__main__':
     elif args['mode'] == 'separate':
 
         for addr in args["toaddrs"]:
-
             send_mail(addr, args)
 
     elif args['mode'] == 'group':

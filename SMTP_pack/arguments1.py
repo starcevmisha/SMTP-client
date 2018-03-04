@@ -4,7 +4,6 @@ from getpass import getpass
 
 
 class Arguments:
-
     def __init__(self):
         self.parser = argparse.ArgumentParser()
         self.parser.add_argument('-s', '--server', action='store', type=str,
@@ -29,8 +28,12 @@ class Arguments:
         self.parser.add_argument('--debug', action='store_true',
                                  help='Debug Mode')
 
-    def get_args(self):
-        args = self.parser.parse_args()
+    def get_args(self, filename=None):
+        if filename is None:
+            args = self.parser.parse_args()
+        else:
+            with open(filename) as f:
+                args = self.parser.parse_args(f.read().split())
         server = input('Write your smtp serve rand port '
                        'like "smtp.gmail.com:465"') \
             if not args.server else args.server
@@ -65,10 +68,15 @@ class Arguments:
             msg = ''
             print('Enter message: (end with ^Z or ^D)')
             for line in sys.stdin:
+                if line[0] == '.':
+                    line = '.' + line
                 msg += line
         else:
-            msg = args.msg
-        # msg = "heqwedsaf"
+            msg = ''
+            for line in args.msg:
+                if line[0] == '.':
+                    line = '.' + line
+                msg += line
 
         return {
             'fromaddr': fromaddr,
